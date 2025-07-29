@@ -1,15 +1,15 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
-# DTO для создания пользователя (входной формат)
+# Схема входящих данных — тут ничего не меняется, валидация по полям
 class UserCreate(BaseModel):
     username: str
     email: str
 
-# DTO для ответа клиенту (выходной формат)
+# Схема исходящих данных: указываем, что модель может заполняться из атрибутов ORM-объекта
 class UserOut(BaseModel):
     id: int
     username: str
     email: str
 
-    class Config:
-        orm_mode = True  # Позволяет автоматически маппить SQLAlchemy-объекты на Pydantic-модель
+    # Вместо deprecated orm_mode ставим from_attributes
+    model_config = ConfigDict(from_attributes=True)
