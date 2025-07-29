@@ -1,15 +1,15 @@
 from pydantic import BaseModel
 
-# DTO для создания пользователя (входной формат)
 class UserCreate(BaseModel):
+    """DTO для создания пользователя"""
     username: str
     email: str
 
-# DTO для ответа клиенту (выходной формат)
 class UserOut(BaseModel):
+    """DTO пользователя в ответе"""
     id: int
     username: str
     email: str
 
     class Config:
-        orm_mode = True  # Позволяет автоматически маппить SQLAlchemy-объекты на Pydantic-модель
+        from_attributes = True  # Позволяет маппить SQLAlchemy -> Pydantic
